@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 const ImagePage = ({ params }) => {
   const newsItemSlug = params.news_id;
   const newsItem = DUMMY_NEWS.find((item) => item.slug == newsItemSlug);
-
+  console.log(newsItem, "NewsDetailLayout");
   if (!newsItem) {
     notFound();
   }
