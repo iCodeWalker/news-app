@@ -59,3 +59,14 @@
         1. Components that are initially pre-rendered on the server,but also can be executed on the client side or browser.
 
         error.js must be client side component as the error can also happen on the client side.
+
+## Intercepting routes:
+
+    An intercepting route is an alternative route, which sometimes gets activated depending on wheather we are navigating to it through an internal link from with in the page or we are coming from an external link or we manually entered the URL or reload the page.
+
+    So for the same path different pages are shown depending upon how we get there.
+
+    The intercepting route intercepts an internal navigation request and instead of showing the page we would see if we relaod the page or come to the page from outside the website a different page will be shown.
+
+    (path_of_the_folder_that_we_want_to_intercept)folder_name_that_we_want_to_intercept
+    Ex : (.)image
