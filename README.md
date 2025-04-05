@@ -79,3 +79,13 @@
     we can apply different layouts to route group using route groups
 
     Routes groups are usefull when we want to setup different layouts for different pages.
+
+## Route Handlers
+
+    Route Handler is a file in which we can export various functions which must be named GET or POST or PUT or PATCH or DELETE. IT must have a http request name.
+
+    The idea behind the route handlers is that we can setup routes that don't return pages that are rendered on the screen but instead in this route handlers we would typically return JSON data.
+
+    We can setup API type routes which can produce data, store data or do whatever we need to do.
+
+    route.js is a reserved keyword used for route handling
