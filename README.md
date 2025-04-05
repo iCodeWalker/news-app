@@ -38,3 +38,12 @@
    default.js is a fallout page. It is shown when the we want to show fallout content.
 
    If the content in the deafault.js and page.js is same we can eliminate the page.js component.
+
+## Catch all routes :
+
+    To create a route for catching all routes we have to create a route as [[...name_of_the_argument]]
+
+    Than content of the page.js will be shown if anything appears in the URL after the "/archive"
+    To access the value of the path in the component we can still use the params object
+
+    params.name_of_the_argument = An array of all path segments
