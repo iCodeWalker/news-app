@@ -30,3 +30,11 @@
 
    );
    };
+
+   All the pages in the parallel route that are shown on the same page should support all the different paths that we want to use.
+
+   Ex :: In archive path we have one page.js and one dynamic route but in latest we only have page.js so to support the dynamic route in latest so that it would not throw not found error we have to add a default.js page
+
+   default.js is a fallout page. It is shown when the we want to show fallout content.
+
+   If the content in the deafault.js and page.js is same we can eliminate the page.js component.
