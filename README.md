@@ -70,3 +70,12 @@
 
     (path_of_the_folder_that_we_want_to_intercept)folder_name_that_we_want_to_intercept
     Ex : (.)image
+
+## Route Groups:
+
+    A route group is set up by adding a new folder in our app folder. use parenthesis to define folder.
+     like (name_of_layout)
+
+    we can apply different layouts to route group using route groups
+
+    Routes groups are usefull when we want to setup different layouts for different pages.
