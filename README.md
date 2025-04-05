@@ -47,3 +47,15 @@
     To access the value of the path in the component we can still use the params object
 
     params.name_of_the_argument = An array of all path segments
+
+## Server Side Components & Client Side Components
+
+    Server Side Components:
+        1. Components are only rendered on the server. The entire component function is only executed on the server never on the client.
+
+
+    Client Side Components:
+
+        1. Components that are initially pre-rendered on the server,but also can be executed on the client side or browser.
+
+        error.js must be client side component as the error can also happen on the client side.
