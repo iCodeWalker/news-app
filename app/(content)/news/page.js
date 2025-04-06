@@ -2,6 +2,7 @@
 
 // import { DUMMY_NEWS } from "@/dummy-news";
 import NewsList from "@/components/newsList";
+import { getAllNews } from "@/lib/news";
 // import { useEffect, useState } from "react";
 
 export default async function NewsPage() {
@@ -37,27 +38,35 @@ export default async function NewsPage() {
   //   return <p>{error}</p>;
   // }
 
-  // ################################### Ends #####################################
+  // ################################### Ends Client side fetching #####################################
 
   // #################### Code for server side data fetching #################
 
   // ## In server components we can directly send api request from the components
 
-  const response = await fetch("http://localhost:8080/news");
+  // const response = await fetch("http://localhost:8080/news");
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch news");
-  }
-  const news = await response.json();
-  let newsContent;
+  // if (!response.ok) {
+  //   throw new Error("Failed to fetch news");
+  // }
+  // const news = await response.json();
+  // let newsContent;
 
-  if (news) {
-    newsContent = <NewsList news={news} />;
-  }
+  // if (news) {
+  //   newsContent = <NewsList news={news} />;
+  // }
+
+  // ################################### Ends Server side fetching #####################################
+
+  // #################### Code for data fetching directly from database #################
+
+  const news = getAllNews();
+
   return (
     <div>
       <h1> News Page</h1>
-      {newsContent}
+      {/* {newsContent} */}
+      <NewsList news={news} />
     </div>
   );
 }
