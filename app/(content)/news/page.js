@@ -60,7 +60,7 @@ export default async function NewsPage() {
 
   // #################### Code for data fetching directly from database #################
 
-  const news = getAllNews();
+  const news = await getAllNews();
 
   return (
     <div>
