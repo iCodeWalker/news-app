@@ -7,7 +7,7 @@ import {
 } from "@/lib/news";
 import Link from "next/link";
 
-const FilteredNewsPage = ({ params }) => {
+const FilteredNewsPage = async ({ params }) => {
   // const newsYear = params.year;
   const filter = params.filter;
 
@@ -16,16 +16,16 @@ const FilteredNewsPage = ({ params }) => {
 
   let news;
   // ##### from previous root page.js ####
-  let links = getAvailableNewsYears();
+  let links = await getAvailableNewsYears();
 
   // ### If we have year but not month ###
   if (selectedYear && !selectedMonth) {
-    news = getNewsForYear(selectedYear);
+    news = await getNewsForYear(selectedYear);
     links = getAvailableNewsMonths(selectedYear);
   }
 
   if (selectedYear && selectedMonth) {
-    news = getNewsForYearAndMonth(selectedYear, selectedMonth);
+    news = await getNewsForYearAndMonth(selectedYear, selectedMonth);
     links = [];
   }
 
@@ -35,11 +35,13 @@ const FilteredNewsPage = ({ params }) => {
     newsContent = <NewsList news={news} />;
   }
 
+  const availabelYears = await getAvailableNewsYears();
+
   // #### throwing errors ####
   if (
-    (selectedYear && !getAvailableNewsYears().includes(+selectedYear)) ||
+    (selectedYear && !availabelYears.includes(selectedYear)) ||
     (selectedMonth &&
-      !getAvailableNewsMonths(selectedYear).includes(+selectedMonth))
+      !getAvailableNewsMonths(selectedYear).includes(selectedMonth))
   ) {
     throw new Error("Invalid Filter");
   }

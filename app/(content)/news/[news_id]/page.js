@@ -1,11 +1,14 @@
-import { DUMMY_NEWS } from "@/dummy-news";
+// import { DUMMY_NEWS } from "@/dummy-news";
+import { getNewsItem } from "@/lib/news";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-export default function NewsDetailPage({ params }) {
+export default async function NewsDetailPage({ params }) {
   const newsId = params.news_id;
 
-  const newsItem = DUMMY_NEWS.find((item) => item.slug == newsId);
+  // const newsItem = DUMMY_NEWS.find((item) => item.slug == newsId);
+  // ############## Fetching data directly from the database ############
+  const newsItem = await getNewsItem(newsId);
 
   if (!newsItem) {
     notFound();
