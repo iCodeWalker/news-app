@@ -86,6 +86,16 @@
 
     The idea behind the route handlers is that we can setup routes that don't return pages that are rendered on the screen but instead in this route handlers we would typically return JSON data.
 
-    We can setup API type routes which can produce data, store data or do whatever we need to do.
+    We can setup API type routes which can produce data, store data or do whatever we need to do, and do not return a component.
 
     route.js is a reserved keyword used for route handling
+
+## Middleware
+
+    we can performs different tasks on the on going request and validate the data in between the requests using middleware
+
+    middleware is also a reserved keyword both for filename and function name
+
+    .next() method forwards the request to it's actual destination
+
+    It does not mean to block or handle the request, though we can do it, But the main purpose is to take a look at some incoming request may change it or bloack it or redirect to other page, using .redirect()
