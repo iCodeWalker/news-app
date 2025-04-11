@@ -6,27 +6,55 @@ import {
   getNewsForYearAndMonth,
 } from "@/lib/news";
 import Link from "next/link";
+import { Suspense } from "react";
 
-const FilteredNewsPage = async ({ params }) => {
-  // const newsYear = params.year;
-  const filter = params.filter;
+const FilterHeader = async ({ year, month }) => {
+  const availabelYears = await getAvailableNewsYears();
+  let links = availabelYears;
 
-  const selectedYear = filter?.[0];
-  const selectedMonth = filter?.[1];
-
-  let news;
-  // ##### from previous root page.js ####
-  let links = await getAvailableNewsYears();
-
-  // ### If we have year but not month ###
-  if (selectedYear && !selectedMonth) {
-    news = await getNewsForYear(selectedYear);
-    links = getAvailableNewsMonths(selectedYear);
+  if (
+    (year && !availabelYears.includes(year)) ||
+    (month && !getAvailableNewsMonths(year).includes(month))
+  ) {
+    throw new Error("Invalid Filter");
   }
 
-  if (selectedYear && selectedMonth) {
-    news = await getNewsForYearAndMonth(selectedYear, selectedMonth);
+  // ### If we have year but not month ###
+  if (year && !month) {
+    // news = await getNewsForYear(year);
+    links = getAvailableNewsMonths(year);
+  }
+
+  if (year && month) {
+    // news = await getNewsForYearAndMonth(selectedYear, selectedMonth);
     links = [];
+  }
+
+  return (
+    <header id="archive-header">
+      <nav>
+        <ul>
+          {links.map((item) => {
+            const href = year ? `/archive/${year}/${item}` : `/archive/${item}`;
+            return (
+              <li key={item}>
+                <Link href={href}>{item}</Link>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+    </header>
+  );
+};
+
+const FilteredNews = async ({ year, month }) => {
+  let news;
+
+  if (year && !month) {
+    news = await getNewsForYear(year);
+  } else if (year && month) {
+    news = await getNewsForYearAndMonth(year, month);
   }
 
   let newsContent = <p>No news found for the selected period.</p>;
@@ -35,21 +63,51 @@ const FilteredNewsPage = async ({ params }) => {
     newsContent = <NewsList news={news} />;
   }
 
-  const availabelYears = await getAvailableNewsYears();
+  return newsContent;
+};
+
+const FilteredNewsPage = async ({ params }) => {
+  // const newsYear = params.year;
+  const filter = params.filter;
+
+  const selectedYear = filter?.[0];
+  const selectedMonth = filter?.[1];
+
+  // let news;
+  // ##### from previous root page.js ####
+  // const availabelYears = await getAvailableNewsYears();
+  // let links = availabelYears;
+
+  // // ### If we have year but not month ###
+  // if (selectedYear && !selectedMonth) {
+  //   // news = await getNewsForYear(selectedYear);
+  //   links = getAvailableNewsMonths(selectedYear);
+  // }
+
+  // if (selectedYear && selectedMonth) {
+  //   // news = await getNewsForYearAndMonth(selectedYear, selectedMonth);
+  //   links = [];
+  // }
+
+  // let newsContent = <p>No news found for the selected period.</p>;
+
+  // if (news && news.length > 0) {
+  //   newsContent = <NewsList news={news} />;
+  // }
 
   // #### throwing errors ####
-  if (
-    (selectedYear && !availabelYears.includes(selectedYear)) ||
-    (selectedMonth &&
-      !getAvailableNewsMonths(selectedYear).includes(selectedMonth))
-  ) {
-    throw new Error("Invalid Filter");
-  }
+  // if (
+  //   (selectedYear && !availabelYears.includes(selectedYear)) ||
+  //   (selectedMonth &&
+  //     !getAvailableNewsMonths(selectedYear).includes(selectedMonth))
+  // ) {
+  //   throw new Error("Invalid Filter");
+  // }
 
   // ##### from previous root page.js ####
   return (
     <>
-      <header id="archive-header">
+      {/* <header id="archive-header">
         <nav>
           <ul>
             {links.map((item) => {
@@ -64,8 +122,14 @@ const FilteredNewsPage = async ({ params }) => {
             })}
           </ul>
         </nav>
-      </header>
-      {newsContent}
+      </header> */}
+      <Suspense fallback={<p>Loading Filter...</p>}>
+        <FilterHeader year={selectedYear} month={selectedMonth} />
+      </Suspense>
+      {/* {newsContent} */}
+      <Suspense fallback={<p>Loading news...</p>}>
+        <FilteredNews year={selectedYear} month={selectedMonth} />
+      </Suspense>
     </>
   );
 
